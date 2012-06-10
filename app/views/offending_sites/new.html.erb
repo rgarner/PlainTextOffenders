@@ -1,0 +1,20 @@
+<div class="post clearfix">
+  <div class="date_and_notes">Submit New</div>
+
+  <div class="photo">
+    <div class="caption">
+      <% if not @offending_site.nil? and @offending_site.errors.any? %>
+          <span style="color:red; font-weight: bold">Errors!</span>
+          <ul>
+            <% @offending_site.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <%= render :partial => "new" %>
+    </div>
+    </div>
+    <div class="just_notes clearfix"></div>
+  </div>
+

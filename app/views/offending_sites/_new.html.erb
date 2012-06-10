@@ -1,0 +1,94 @@
+<p>
+  Send us an image of the proof that the website in question is storing your password in plain-text (for instance a screenshot of the email you got containing the password). An email with your password sent to you at any time except after registering is much more preferable (such as an email sent after clicking “forgot password” or getting it in password reminders), but an email containing your password as confirmation for registering is OK too.<br><br>
+  Remember to always blank out the details you don’t want shown on the website. Please include the site’s domain and an explanation of what the website is in the description.<br><br>
+  Submissions are held for moderation and queued.
+</p>
+<%= form_for @offending_site || OffendingSite.new, :html => {:id => 'new_site', :multipart => true } do |f| %>
+    <table border="0" cellspacing="0" cellpadding="0" style="width:99%">
+        <tr>
+          <td class="required_label">Url</td>
+          <td><%= f.text_field :url %></td>
+        </tr>
+      <tr>
+        <td class="required_label">Screenshot</td>
+        <td><%= f.file_field :screenshot %></td>
+      </tr>
+      <tr>
+        <td class="required_label">Your name</td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td class="required_label">Your email</td>
+        <td><%= f.text_field :email %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= f.label :description %></td>
+      </tr>
+      <tr>
+        <td colspan="2"><%= f.text_area :description %></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <%= f.check_box :terms_of_service %>
+          <%= f.label :terms_of_service, 'I accept the <a id="terms_link" target="_blank" href="/terms">terms of submission</a>'.html_safe %>
+        </td>
+      </tr>
+    </table>
+
+    <div style="width:99%; text-align:center;">
+        <%= f.submit "Submit!" %>
+    </div>
+
+<% end %>
+
+<div id="terms_of_submission_dialog" title="Terms of Submission" style="display:none;">
+    <%= render :partial => "terms" %>
+</div>
+
+<script type="text/javascript">
+    function openTerms() {
+        $("#terms_of_submission_dialog").dialog(
+                {
+                    width: '500',
+                    height: '470'
+                }
+        );
+    }
+    $(function() {
+        $("#terms_link").click(function() {
+            openTerms();
+            return false;
+        });
+
+        $('#new_site').validate({
+            rules:{
+                "offending_site[url]" : {required: true, url: true, remote: '/check_site_url' },
+                "offending_site[screenshot]": {required: true },
+                "offending_site[name]" : {required: true },
+                "offending_site[email]" : {required: true, email: true}
+            },
+            messages: {
+                "offending_site[url]" : {
+                    required: "Url is required",
+                    url: "Url is invalid",
+                    remote: "Url already exists on the server"
+                },
+                "offending_site[screenshot]" : "Screenshot is required",
+                "offending_site[name]" : "Name is required",
+                "offending_site[email]" : {
+                    required: "Email is required",
+                    email: "Email is invalid"
+                }
+            }
+        });
+
+        $('#new_site').submit(function() {
+           if ($('#new_site').valid()) {
+               if ($("#offending_site_terms_of_service:checked").val() != "1") {
+                   alert('You must accept the terms of submission.');
+                   return false;
+               }
+           }
+        });
+    });
+</script>
