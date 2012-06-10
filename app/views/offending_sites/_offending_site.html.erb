@@ -1,0 +1,27 @@
+<div class="post clearfix">
+  <div class="date_and_notes"><%= link_to_unless_current post_date_format(offending_site.published_at), show_by_url_url(offending_site.short_url) %></div>
+
+  <div class="photo">
+    <% if current_page?(show_by_url_url(offending_site.short_url)) %>
+        <div class='spread'>
+          <div class='twshare left'>
+            <a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="funonrails">Tweet</a>
+            <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+          </div>
+        </div>
+
+        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+        <fb:like href="" layout="button_count" show_faces="false" width="450" font=""></fb:like>
+    <% end %>
+    <div class="photo_holder">
+      <%= image_tag offending_site.screenshot.url %>
+    </div>
+    <div class="caption">
+      <%= offending_site.url %>
+      <p>
+        <%= raw offending_site.description %>
+      </p>
+    </div>
+    </div>
+    <div class="just_notes clearfix"></div>
+  </div>

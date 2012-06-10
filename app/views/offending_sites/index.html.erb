@@ -1,0 +1,29 @@
+<% unless flash[:notice].nil? %>
+    <%= render :partial => "notice" %>
+<% end %>
+
+<% if @offending_sites.nil? or @offending_sites.size == 0 %>
+    <%= render :partial => "nothing_to_see" %>
+<% end %>
+
+<%= render :partial => @offending_sites %>
+
+<% unless @offending_sites.nil? or @offending_sites.size == 0 %>
+    <% content_for :footer do %>
+        <% current_page_number = (params[:page] || "1").to_i %>
+
+        <% if current_page_number > 1 %>
+            <a id="newer_posts" href="<%="#{offending_sites_url}?page=#{current_page_number-1}" %>">&#171; Newer posts</a> &nbsp;&nbsp;
+        <% end %>
+
+        <div class="page_of clearfix">
+          <strong>Page <%=current_page_number%></strong>
+          <span>of <%=@offending_sites.total_pages%></span>
+        </div>
+
+        <% if current_page_number < @offending_sites.total_pages %>
+            <a id="older_posts" href="<%="#{offending_sites_url}?page=#{current_page_number+1}" %>">Older posts &#187;</a>
+        <% end %>
+
+    <% end %>
+<% end %>

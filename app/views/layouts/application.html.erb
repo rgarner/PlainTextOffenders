@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Plaintextoffenders</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults, "jquery.validate.min" %>
+  <%= auto_discovery_link_tag(:atom, feed_path) %>
+  <%= favicon_link_tag 'favicon.png' %>
+  <link rel="apple-touch-icon" href="<%= image_path "favicon.png" %>"/>
+
+
+  <%= csrf_meta_tag %>
+  <meta name="viewport" content="width=775"/> <!-- iPhone -->
+  <meta name="description" content="Did you just email me back my own password?!" />
+</head>
+<body>
+<div id="content" class="clearfix">
+    <div id="header" class="clearfix">
+        <h1><%= link_to "Plain Text Offenders", root_url %></h1>
+    </div>
+
+    <div id="sidebar">
+        <div id="description">Did you just email me back my own password?!</div>
+        <%= link_to "About", about_us_url, :class => "page_link" %>
+        <%= link_to "Talk to Us", talk_to_us_url, :class => "page_link" %>
+        <%= link_to "Submit New", create_new_url, {:id => "submitNew", :class => "page_link"} %>
+        <%= link_to "Feed", feed_url, :class => "page_link" %>
+        <div id="search">
+            <form action="<%=search_path%>" method="get">
+                <label><span>Search</span></label>
+                <input type="text" name="q" value="<%=params[:q]%>">
+                <input id="search_submit" type="submit" value="Search" alt="Search">
+            </form>
+        </div>
+    </div>
+
+    <div id="offending_sites" class="clearfix">
+        <%= yield %>
+
+      <div id="footer">
+          <div id="footer_content" class="clearfix">
+            <%= yield :footer %>
+          </div>
+          <div id="footer_info">
+            <p>Developed by <a href="http://IronShay.com">Shay Friedman</a></p>
+            <p><strong>Brutal Simplicity</strong> theme by <a href="http://kevin.tumblr.com">Kevin Burg</a></p>
+          </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+ var _gaq = _gaq || [];
+ _gaq.push(['_setAccount', 'UA-22530527-1']);
+ _gaq.push(['_trackPageview']);
+ (function() {
+   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+</script>
+

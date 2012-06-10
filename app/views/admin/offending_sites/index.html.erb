@@ -1,0 +1,51 @@
+<% unless flash[:notice].nil? %>
+    <fieldset style="background-color: yellow">
+      <legend>Notice!</legend>
+      <%= flash[:notice] %>
+    </fieldset>
+<% end %>
+
+<% unless flash[:error].nil? %>
+    <fieldset style="background-color: yellow; border-color: red;">
+      <legend style="color:red; font-weight: bold">ERROR!</legend>
+      <%= flash[:error] %>
+    </fieldset>
+<% end %>
+
+
+<%= link_to "Create new", new_admin_offending_site_url %>
+<table>
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Url</td>
+      <td>Created by</td>
+      <td>Added at</td>
+      <td>Is published?</td>
+      <td>Published at</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @offending_sites.each do |site| %>
+       <tr>
+         <td><%= site.id %></td>
+         <td><a href="<%=site.url%>"><%=site.url%></a></td>
+         <td><a href="mailto:<%=site.email%>"><%= site.name %></a></td>
+         <td><%= site.created_at %></td>
+         <td><%= site.is_published ? "V" : "" %></td>
+         <td><%= site.published_at %></td>
+         <td>
+           <%= link_to "Edit", edit_admin_offending_site_path(site) %> |
+           <%= link_to "View", [:admin, site] %> |
+           <%= link_to "Delete", [:admin,site], :confirm => "Are you sure you want to delete this site?", :method=>"delete" %> |
+           <% if site.is_published %>
+            <%= link_to "Unpublish", { :action => "unpublish", :id => site.id }, :confirm => "This will hide the site from your visitors. Are you sure?" %>
+           <% else %>
+            <%= link_to "Publish", { :action => "publish", :id => site.id }, :confirm => "Once you confirm, the site will be publicly available. Are you sure?"  %> |
+           <% end %>
+         </td>
+       </tr>
+    <% end %>
+  </tbody>
+</table>

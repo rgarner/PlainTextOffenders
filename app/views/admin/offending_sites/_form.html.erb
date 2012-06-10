@@ -1,0 +1,57 @@
+<% if @offending_site.errors.any? %>
+  <span style="color:red; font-weight: bold">Errors!</span>
+  <ul>
+    <% @offending_site.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_for [:admin, @offending_site], :html => {:multipart => true } do |f| %>
+    <div class="editor-label">
+      <%= f.label :url %>
+    </div>
+    <div class="editor-input">
+      <%= f.text_field :url %>
+    </div>
+
+    <div class="editor-label">
+      <%= f.label :description %>
+    </div>
+    <div class="editor-input">
+      <%= f.text_area :description %>
+    </div>
+
+    <div class="editor-label">
+      <%= f.label :name, 'Creator name' %>
+    </div>
+    <div class="editor-input">
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="editor-label">
+      <%= f.label :email, 'Creator email' %>
+    </div>
+    <div class="editor-input">
+      <%= f.text_field :email %>
+    </div>
+
+    <div class="editor-label">
+      <%= f.label :screenshot %>
+    </div>
+    <div class="editor-input">
+      <%= f.file_field :screenshot %>
+      <br/>
+      <%= image_tag @offending_site.screenshot.url if @offending_site.screenshot? %>
+    </div>
+
+    <div class="editor-label">
+      <%= f.label :is_published %>
+    </div>
+    <div class="editor-input">
+      <%= f.check_box :is_published %>
+    </div>
+
+    <%= f.submit %>
+
+<% end %>
