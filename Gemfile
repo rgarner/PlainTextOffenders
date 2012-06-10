@@ -1,9 +1,11 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.10'
+gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'paperclip'
 gem 'jquery-rails'
 gem 'will_paginate', '~> 3.0'
+gem 'capybara'
 
 group :production, :staging do
   gem "pg"
